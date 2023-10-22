@@ -32,7 +32,7 @@ def removeStrings(sections: dict, stringList: dict):
 def stringAdder(line: str, stringList: dict):
     for index, item in enumerate(line):
         if item in stringList.keys():
-            line[index] = stringList[item].replace("&QUOTE", '"')
+            line[index] = stringList[item].replace("&QUOTE", '"').replace("\\n", "\n")
     return line
 
 

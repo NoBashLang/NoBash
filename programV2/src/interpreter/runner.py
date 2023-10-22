@@ -33,7 +33,10 @@ def getInstruction(instructions) -> list:
 
 def replaceBuiltins(funcName):
     builtins = {"import": "__import__", "input": "__input__", "exit": "__exit__",\
-        "list": "__list__", "dict": "___dict__", "len": "__len__", "set": "__set__"}
+        "list": "__list__", "dict": "___dict__", "len": "__len__", "set": "__set__",\
+        "sleep": "__sleep__", "int": "__int__", "float": "__float__", "string": "__string__",\
+        "bool": "__bool__", "range": "__range__", "sort": "__sort__", "split": "__split__",\
+        "keys": "__keys__", "values": "__values__"}
     if funcName.value in builtins.keys():
         return Token(builtins[funcName.value])
     return funcName

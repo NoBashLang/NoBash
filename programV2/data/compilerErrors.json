@@ -16,5 +16,6 @@
     "15": "Line {} does not have the right amount of opening or closing brackets. Each line must have one of each.",
     "16": "Could not write instructions to file '{}'",
     "17": "Internal error, not enough data on curly bracket to write",
-    "18": "No file location provided"
+    "18": "No file location provided",
+    "19": "Invalid syntax in line {}"
 }

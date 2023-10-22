@@ -1,6 +1,7 @@
 from src.interpreter.errors import error
 from src.interpreter.token import Token
 from datetime import datetime
+from time import sleep
 
 import shutil
 import os
@@ -127,12 +128,12 @@ def rmdir(directory):
         error(8100, "Directory must be of type string")
 
 
-def customUniq(list1, list2):
+def uniq(list1, list2):
     if isinstance(list1, Token) and list1.type == "list" and isinstance(list2, Token) and list2.type == "list":
         set1 = {(token.value, token.type) for token in list1.value}
         set2 = {(token.value, token.type) for token in list2.value}
         uniqueTokens = [Token(value, type) for value, type in set1.union(set2)]
-        return Token(uniqueTokensList, "list")
+        return Token(uniqueTokens, "list")
     else:
         error(8100, "Both arguments must be of type list")
 
@@ -156,7 +157,8 @@ def time():
 
 
 def env():
-    return Token(os.environ, "dict")
+    environ = {Token(key, "string"): Token(value, "string") for key, value in dict(os.environ).items()}
+    return Token(environ, "dict")
 
 def uid():
     user_id = os.getuid()
@@ -184,11 +186,11 @@ def logname():
 def pwd():
     return Token(os.getcwd(), "string")
 
-def sleep(seconds):
-    if isinstance(seconds, Token) and seconds.type == ["float", "int"]:
+def __sleep__(seconds):
+    if isinstance(seconds, Token) and seconds.type in ["float", "int"]:
         try:
             sleepTime = float(seconds.value)
-            time.sleep(sleepTime)
+            sleep(sleepTime)
             return Token("true", "bool")
         except ValueError:
             error(8100, "Invalid sleep duration")

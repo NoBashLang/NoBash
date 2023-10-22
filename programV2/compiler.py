@@ -40,7 +40,7 @@ if __name__ == "__main__":
     try:
         fileLocation = argv[1]
     except Exception:
-        error(18)
+        error(18, [])
     lines = readFile(fileLocation)
     metadata = getData(fileLocation)
     lines, stringDictionary = removeAllStrings(lines)

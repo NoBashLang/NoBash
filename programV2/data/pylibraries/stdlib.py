@@ -8,13 +8,13 @@ from src.interpreter.errors import error
 
 
 
-
+"""
 def get(dataStruct, index):
     if dataStruct.type == "list":
         if index.type != "int":
             error(303, [index.type])
         return dataStruct.value[index.value]
-
+"""
 
 def add(x, y):
     nums = ["int", "float"]
@@ -87,7 +87,7 @@ def fmt(formatString, *values):
     if formatString.type != "string":
         error(309, [formatString.type, formatString.value, RIP[-1]])
     for value in values:
-        formatString.value = formatString.value.replace("%v", str(value))
+        formatString.value = formatString.value.replace("%v", str(value), 1)
     return formatString 
 
 
@@ -120,9 +120,16 @@ def __len__(value):
     return Token(len(value.value), "int")
 
 
-def sort(start):
+def __sort__(start):
+    startType = start.type
     if start.type in ["list", "string"]:
-        return Token(sorted(start.value), start.type)
+        start = start.value
+        if startType == "list":
+            start = {token.value: token.type for token in start}
+            print("s", start)
+            sortedList = [Token(token, tokenType) for token, tokenType in dict(sorted(start.items())).items()]
+            return Token(sortedList, startType)
+        return Token(sorted(start), "string")
     error(313, [start.type, start.value, RIP[-1]])
     
 
@@ -148,21 +155,24 @@ def trim(value, start, end):
     return result
     
 
-def range(start, end):
+def __range__(start, end):
     if start.type != "int":
         error(320, [start.type, start.value, RIP[-1]])
     elif end.type != "int":
         error(321, [end.type, end.value, RIP[-1]])
     numberList = list(range(start.value, end.value))
+    numberList = [Token(number, "int") for number in numberList]
     return Token(numberList, "list")
 
 
-def split(inputString, identifier):
+def __split__(inputString, identifier):
     if inputString.type != "string":
         error(324, [inputString.type, RIP[-1]])
     elif identifier.type != "string":
         error(324, [identifier.type, RIP[-1]])
-    return Token(split(inputString.value, identifier.value), "list")
+    splitList = inputString.value.split(identifier.value)
+    splitList = [Token(value, "string") for value in splitList] 
+    return Token(splitList, "list")
 
 
 def append(listToken, item):
@@ -270,27 +280,23 @@ def __set__(container, identifier, newValue):
         newContainer[identifier.value] = newValue
         return Token(newContainer, "list")
     elif container.type == "dict":
-        if not has(container, identifier):
-            error(357, [container.type, identifier.value])
-        for containerIdentifier, value in container.value.items():
-            if isSame(containerIdentifier, identifier):
-                newContainer = container.value.copy()
-                newContainer[containerIdentifier] = newValue
-                return Token(newContainer, "dict")
+        newContainer = container.value.copy()
+        newContainer[identifier] = newValue
+        return Token(newContainer, "dict")
     
     error(356, [container.type])
 
 # Keys
-def keys(dictionary):
+def __keys__(dictionary):
     if isinstance(dictionary, Token) and dictionary.type == "dict":
-        return Token(list(dictionary.keys()), "list")
+        return Token(list(dictionary.value.keys()), "list")
     else:
         error(357, [dictionary.type])
 
 # Values
-def keys(dictionary):
+def __values__(dictionary):
     if isinstance(dictionary, Token) and dictionary.type == "dict":
-        return Token(list(dictionary.values()), "list")
+        return Token(list(dictionary.value.values()), "list")
     else:
         error(357, [dictionary.type])
 
@@ -298,7 +304,7 @@ def keys(dictionary):
 def __string__(value):
     return Token(str(value.value), "string")
 
-
+"""
 def __int__(value):
     try:
         return Token(int(value.value), "number")
@@ -318,3 +324,4 @@ def __bool__(value):
         return Token(value.value, "bool")
     else:
         error(690, [value.type])
+"""

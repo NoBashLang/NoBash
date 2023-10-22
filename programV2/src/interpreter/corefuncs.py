@@ -5,7 +5,7 @@ from src.interpreter.varsAndFuncs import setVar, getVar, hasVar, \
     getBraceIdFromEndInstruction, getBraceIdFromStartInstruction, \
         getIfChainRan, addPyFuncs
 from src.interpreter.token import Token
-from data.pylibraries.stdlib import add, mul, div, sub
+from data.pylibraries.stdlib import add, mul, div, sub, get
 import src.interpreter.globalSGT as globalSGT
 from src.interpreter.importLibs import importPyLib
 
@@ -167,6 +167,34 @@ def __lesser__(x, y):
     else:
         error(530, [x.type, y.type])
 
+
+def __greater__(x, y):
+    nums = ["int", "float"]
+    if x.type in nums and y.type in nums:
+        return Token(str(x.value > y.value).lower(), "bool")
+    elif x.type == y.type == "string":
+        return Token(str(len(x.value) > len(y.value)).lower(), "bool")
+    else:
+        error(530, [x.type, y.type])
+
+def __lesserOrEqual__(x, y):
+    nums = ["int", "float"]
+    if x.type in nums and y.type in nums:
+        return Token(str(x.value <= y.value).lower(), "bool")
+    elif x.type == y.type == "string":
+        return Token(str(len(x.value) <= len(y.value)).lower(), "bool")
+    else:
+        error(530, [x.type, y.type])
+
+
+def __greaterOrEqual__(x, y):
+    nums = ["int", "float"]
+    if x.type in nums and y.type in nums:
+        return Token(str(x.value >= y.value).lower(), "bool")
+    elif x.type == y.type == "string":
+        return Token(str(len(x.value) >= len(y.value)).lower(), "bool")
+    else:
+        error(530, [x.type, y.type])
 
 
 def __doFor__(var, dataStruct, endInstruction):

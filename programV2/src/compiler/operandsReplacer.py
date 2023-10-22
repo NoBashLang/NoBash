@@ -1,3 +1,5 @@
+from src.compiler.errors import error
+
 import string
 
 oop = ["*/", "+-", ":", ["=="], ["!="], ">", "<", ["<="], [">="], ["not"], ["and"], ["or"],"=", ["+="], ["-="], ["*="], ["/="], ["elif"], ["if"], ["else"], ["while"], ["for"], ["return"]]
@@ -7,21 +9,25 @@ opFuncs = {">": "__greater__", "<": "__lesser__", "<=": "__lesserOrEqual__", ">=
     "*": "mul", "/": "div", "==":"__isEqual__", "elif": "__checkIfElse__", "if":"__checkIf__", "+=": "__setAddVariable__", "-=": "__setSubVariable__", "*=": "__setMulVariable__", \
     "/=": "__setDivVariable__", ":": "zip", "and": "__bothAnd__", "or": "__bothOr__"}
 
+currentLineOperands = 0
 
 def insert(line, index, char):
     return line[:index] + char + line[index:]
 
 
 def removeSpaces(line):
-    toBeRejoined = ["=  =", "! =", "el if", "+  =", "-  =", "/  =", "*  ="]
+    toBeRejoined = ["=  =", "! =", "el if", "+  =", "-  =", "/  =", "*  =", ">  =", "<  ="]
     for item in toBeRejoined:
         line = line.replace(item, item.replace(" ", ""))
     return line
 
 
 def insertSpaces(line):
-    line = line.replace("(not ", "( not ")
-    for op in ["+", ",", "-", "*", "/", "=", " if ", " in ", ")", " not "]:
+    try:
+        line = line.replace("(not ", "( not ")
+    except Exception:
+        error(19, [str(currentLineOperands)])
+    for op in ["+", ",", "-", "*", "/", "=", " if ", " in ", ")", " not ", ">", "<"]:
         line = line.replace(op, f" {op} ")
     line = removeSpaces(line).replace(" in ", ",")
     return line
@@ -108,8 +114,11 @@ def doMain(line):
                         line = line.replace("{", ",{")
             else:
                 line = findRightWhiteSpace(i, line, skipAmount=skipAmount)
-            line = line.replace("(", "( ")
-            line = findLeftWhiteSpace(i, line, opFuncs[firstOp.strip()], firstOp)
+            try:
+                line = line.replace("(", "( ")
+                line = findLeftWhiteSpace(i, line, opFuncs[firstOp.strip()], firstOp)
+            except Exception:
+                error(19, [str(currentLineOperands)])
             line = doMain(line)
             return line.replace(" ", "")
     return line
@@ -117,7 +126,9 @@ def doMain(line):
 
 def replaceOperands(lines):
     newLines = {}
+    global currentLineOperands
     for i, line in lines.items():
+        currentLineOperands = int(i)+1
         line = " " +line[0] + " "
         line = doMain(line)
         line = insertSpaces(line).replace(",", ", ")

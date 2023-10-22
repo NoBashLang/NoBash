@@ -1,0 +1,121 @@
+x = 2
+put("x", x)
+func hello(a, b, c) {
+    a = b + c
+    return a, b, c
+}
+a, b, c = hello(2, 3, 4)
+l = hello(2, 3, 4)
+put(a, b, c, l)
+a += 2
+b -= 2
+c *= 4
+d = 10
+d /= 2
+put(d)
+d /= 3
+put(d)
+put(a, b, c)
+for i in l {
+    put(i)
+}
+l = list(10, 30, 40)
+put(l)
+
+d = dict("1": 1, "2": 3)
+put(d)
+
+import("coreutils")
+ls()
+
+if true and false {
+    put("true and false")
+}
+
+if true and true {
+    put("true and true")
+}
+
+if false and false {
+    put("false and false")
+}
+
+if true or false {
+    put("true or false")
+}
+
+if false or false {
+    put("false or false")
+}
+
+if true or true {
+    put("true or true")
+}
+
+put(ls("all": true))
+put(ls("files": true))
+put(ls("directoriesOnly": true))
+
+listOne = list(1, 2, 3)
+listTwo = list(2, 4, 5)
+put(listOne, listTwo)
+put(uniq(listOne, listTwo))
+put(date())
+put(time())
+put(uid())
+put(gid())
+put(logname())
+put(pwd())
+put("start sleep")
+// sleep(3)
+put("end sleep")
+put(uname())
+put(whoami())
+
+put("----stdlib---")
+l = list("a", "b", "c")
+d = dict("aa": 1, "bb": 2, "cc": 3)
+put(get(l, 0), get(l, 2))
+put(get(d, "bb"))
+put(1 + 2)
+put( 2 * 4)
+put(9/3)
+put(3-2)
+put(float("3.4")+2)
+put("hi, "+string(2))
+put(int(3.4))
+put(3 + int("4"))
+put(neg(10)+5)
+put(bool(10), bool(0))
+putnl("Hello, ")
+putnl("friend!")
+put("")
+putnl(">> ")
+put("You input: "+input())
+put(fmt("Hi, %v, my friend! %v", "bob", "james too!"))
+put(len("12345"), len(list(1, 2, 3)))
+put(sort("dsckgdsenxa"), sort(list(3, 2, 5, 4, 5)))
+put(range(1, 10))
+for i in range(neg(1), 19) {
+    put(i)
+}
+put(reverse("hello"), reverse(list(1, 2, 3, 4)))
+l = list(1, 2, 3, 4, 5, 6, 7)
+put(trim(l, 3, 5), trim("abcdefg", 3, 6))
+put(split("a,b,c", ","))
+put(l)
+put(append(l, "Appended!"))
+put(replace("Hi im billy. im a NoBash user!", "im", "I'm"))
+writef("test.txt", "This is the first line")
+appendf("test.txt", "\nthis is the second line")
+put(readf("test.txt"))
+put("hi\nnewline")
+put(has(l, 4), has(l, 343))
+put(has("abcd", "bc"), has("abcd", "abcde"))
+put(d)
+put(has(d, "aa"), has(d, "dd"))
+put(get(d, "aa"))
+put(set(l, 3, "jordan"), set(d, "gg", 10))
+put(keys(d), values(d))
+
+

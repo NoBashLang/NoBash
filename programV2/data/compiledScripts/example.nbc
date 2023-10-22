@@ -1,0 +1,218 @@
+# Metadata
+filehash, 4d770cf5bcb081e734fb8042b2b3b59fd2cf553e09e1cc18d90cb140b08f14ca
+compileunixtime, 1698007242.3300872
+compiledsystemos, Linux-6.5.7-arch1-1-x86_64-with-glibc2.38
+compiledsystemmac, d8:5e:d3:e1:e4:a2
+compilerversion, 0.1.0-alpha
+# Instructions
+0, 0, __setVariable__, x, 2
+1, 1, put, "x", x
+2, 6, hello, 2, 3, 4
+3, 6, __setVariable__, a, b, c,  ret2
+4, 7, hello, 2, 3, 4
+5, 7, __setVariable__, l,  ret4
+6, 8, put, a, b, c, l
+7, 9, __setAddVariable__, a, 2
+8, 10, __setSubVariable__, b, 2
+9, 11, __setMulVariable__, c, 4
+10, 12, __setVariable__, d, 10
+11, 13, __setDivVariable__, d, 2
+12, 14, put, d
+13, 15, __setDivVariable__, d, 3
+14, 16, put, d
+15, 17, put, a, b, c
+16, 18, __doFor__, i, l, obrs1
+17, 19, put, i
+18, 20, __jumpBackFor__, cbrs1
+19, 21, list, 10, 30, 40
+20, 21, __setVariable__, l,  ret19
+21, 22, put, l
+22, 24, zip, "2", 3
+23, 24, zip, "1", 1
+24, 24, dict,  ret23,  ret22
+25, 24, __setVariable__, d,  ret24
+26, 25, put, d
+27, 27, import, "coreutils"
+28, 28, ls
+29, 30, __bothAnd__, true, false
+30, 30, __checkIf__,  ret29, obrs2
+31, 31, put, "true and false"
+32, 32, __cbrfIf__, cbrs2
+33, 34, __bothAnd__, true, true
+34, 34, __checkIf__,  ret33, obrs3
+35, 35, put, "true and true"
+36, 36, __cbrfIf__, cbrs3
+37, 38, __bothAnd__, false, false
+38, 38, __checkIf__,  ret37, obrs4
+39, 39, put, "false and false"
+40, 40, __cbrfIf__, cbrs4
+41, 42, __bothOr__, true, false
+42, 42, __checkIf__,  ret41, obrs5
+43, 43, put, "true or false"
+44, 44, __cbrfIf__, cbrs5
+45, 46, __bothOr__, false, false
+46, 46, __checkIf__,  ret45, obrs6
+47, 47, put, "false or false"
+48, 48, __cbrfIf__, cbrs6
+49, 50, __bothOr__, true, true
+50, 50, __checkIf__,  ret49, obrs7
+51, 51, put, "true or true"
+52, 52, __cbrfIf__, cbrs7
+53, 54, zip, "all", true
+54, 54, ls,  ret53
+55, 54, put,  ret54
+56, 55, zip, "files", true
+57, 55, ls,  ret56
+58, 55, put,  ret57
+59, 56, zip, "directoriesOnly", true
+60, 56, ls,  ret59
+61, 56, put,  ret60
+62, 58, list, 1, 2, 3
+63, 58, __setVariable__, listOne,  ret62
+64, 59, list, 2, 4, 5
+65, 59, __setVariable__, listTwo,  ret64
+66, 60, put, listOne, listTwo
+67, 61, uniq, listOne, listTwo
+68, 61, put,  ret67
+69, 62, date
+70, 62, put,  ret69
+71, 63, time
+72, 63, put,  ret71
+73, 64, uid
+74, 64, put,  ret73
+75, 65, gid
+76, 65, put,  ret75
+77, 66, logname
+78, 66, put,  ret77
+79, 67, pwd
+80, 67, put,  ret79
+81, 68, put, "start sleep"
+82, 70, put, "end sleep"
+83, 71, uname
+84, 71, put,  ret83
+85, 72, whoami
+86, 72, put,  ret85
+87, 74, put, "----stdlib---"
+88, 75, list, "a", "b", "c"
+89, 75, __setVariable__, l,  ret88
+90, 76, zip, "cc", 3
+91, 76, zip, "bb", 2
+92, 76, zip, "aa", 1
+93, 76, dict,  ret92,  ret91,  ret90
+94, 76, __setVariable__, d,  ret93
+95, 77, get, l, 2
+96, 77, get, l, 0
+97, 77, put,  ret96,  ret95
+98, 78, get, d, "bb"
+99, 78, put,  ret98
+100, 79, add, 1, 2
+101, 79, put,  ret100
+102, 80, mul, 2, 4
+103, 80, put,  ret102
+104, 81, div, 9, 3
+105, 81, put,  ret104
+106, 82, sub, 3, 2
+107, 82, put,  ret106
+108, 83, float, "3.4"
+109, 83, add,  ret108, 2
+110, 83, put,  ret109
+111, 84, string, 2
+112, 84, add, "hi, ",  ret111
+113, 84, put,  ret112
+114, 85, int, 3.4
+115, 85, put,  ret114
+116, 86, int, "4"
+117, 86, add, 3,  ret116
+118, 86, put,  ret117
+119, 87, neg, 10
+120, 87, add,  ret119, 5
+121, 87, put,  ret120
+122, 88, bool, 0
+123, 88, bool, 10
+124, 88, put,  ret123,  ret122
+125, 89, putnl, "Hello, "
+126, 90, putnl, "friend!"
+127, 91, put, ""
+128, 92, putnl, ">> "
+129, 93, input
+130, 93, add, "You input: ",  ret129
+131, 93, put,  ret130
+132, 94, fmt, "Hi, %v, my friend! %v", "bob", "james too!"
+133, 94, put,  ret132
+134, 95, list, 1, 2, 3
+135, 95, len,  ret134
+136, 95, len, "12345"
+137, 95, put,  ret136,  ret135
+138, 96, list, 3, 2, 5, 4, 5
+139, 96, sort,  ret138
+140, 96, sort, "dsckgdsenxa"
+141, 96, put,  ret140,  ret139
+142, 97, range, 1, 10
+143, 97, put,  ret142
+144, 98, neg, 1
+145, 98, range,  ret144, 19
+146, 98, __doFor__, i,  ret145, obrs8
+147, 99, put, i
+148, 100, __jumpBackFor__, cbrs8
+149, 101, list, 1, 2, 3, 4
+150, 101, reverse,  ret149
+151, 101, reverse, "hello"
+152, 101, put,  ret151,  ret150
+153, 102, list, 1, 2, 3, 4, 5, 6, 7
+154, 102, __setVariable__, l,  ret153
+155, 103, trim, "abcdefg", 3, 6
+156, 103, trim, l, 3, 5
+157, 103, put,  ret156,  ret155
+158, 104, split, "a,b,c", ","
+159, 104, put,  ret158
+160, 105, put, l
+161, 106, append, l, "Appended!"
+162, 106, put,  ret161
+163, 107, replace, "Hi im billy. im a NoBash user!", "im", "I'm"
+164, 107, put,  ret163
+165, 108, writef, "test.txt", "This is the first line"
+166, 109, appendf, "test.txt", "\nthis is the second line"
+167, 110, readf, "test.txt"
+168, 110, put,  ret167
+169, 111, put, "hi\nnewline"
+170, 112, has, l, 343
+171, 112, has, l, 4
+172, 112, put,  ret171,  ret170
+173, 113, has, "abcd", "abcde"
+174, 113, has, "abcd", "bc"
+175, 113, put,  ret174,  ret173
+176, 114, put, d
+177, 115, has, d, "dd"
+178, 115, has, d, "aa"
+179, 115, put,  ret178,  ret177
+180, 116, get, d, "aa"
+181, 116, put,  ret180
+182, 117, set, d, "gg", 10
+183, 117, set, l, 3, "jordan"
+184, 117, put,  ret183,  ret182
+185, 118, values, d
+186, 118, keys, d
+187, 118, put,  ret186,  ret185
+188, 121, __exit__
+189, 3, add, b, c
+190, 3, __setVariable__, a,  ret189
+191, 4, __funcReturn__, a, b, c
+192, 5, __funcReturn__
+# Functions
+hello, 188, a, b, c
+# IfChains
+2
+3
+4
+5
+6
+7
+# BracesInfo
+1, 16, for, 18
+2, 29, if, 32
+3, 33, if, 36
+4, 37, if, 40
+5, 41, if, 44
+6, 45, if, 48
+7, 49, if, 52
+8, 144, for, 148
