@@ -22,7 +22,7 @@ def loadFLT() -> dict:
         with open(path.expanduser("~")+"/.nobash/functionTable.json", "r") as f: # Reads the file in a folder in the users home directory
             return json.load(f)
     except Exception:
-        errors.error(41, ["~/.nobash/functionTable.json"])
+        errors.error(23, [])
 
 
 flt = loadFLT()
@@ -33,7 +33,7 @@ def getFuncLibraryName(funcName):
     try:
         libName = flt[funcName.value]["file"].replace(".py", "")
     except Exception as e:
-        error(1001, [funcName, "file"])
+        error(24, [funcName])
     return libName
 
 
@@ -42,7 +42,7 @@ def getFuncLibrary(funcName):
     libName = getFuncLibraryName(funcName)
     if libName in pyLibs.keys():
         return pyLibs[libName]
-    error(1002, libName)
+    error(25, [libName])
 
 
 
@@ -60,9 +60,9 @@ def isPyFunction(functionName: str) -> bool:
                 return True
             return False
         except Exception as e:
-            error(1001, [functionName, "language"])
+            error(20, [functionName])
     else:
-        error(72, functionName)
+        error(26, [functionName])
 
 
 
@@ -99,24 +99,25 @@ def passNbParameters(arguments, funcName):
     if "arguments" in flt[funcName].keys():
         reqArgs = flt[funcName]["arguments"]
         if len(reqArgs) != len(arguments):
-            error(142, [funcName, len(arguments), len(reqArgs)])
+            error(17, [funcName, len(reqArgs), len(arguments)])
         for indx, arg in enumerate(arguments):
             setVar(reqArgs[indx], arg, scope)
     else:
-        error(91, [len(arguments), 0])
+        error(17, [funcName, len(arguments), 0])
             
+
 def getBraceIdFromEndInstruction(instructionNumber):
     for brace in src.interpreter.globalSGT.bracesInfoGlobal:
         if str(brace[3].value) == str(instructionNumber):
             return brace[0]
-    error(1052, [ID])
+    error(27, [ID])
 
 
 def getBraceIdFromStartInstruction(instructionNumber):
     for brace in src.interpreter.globalSGT.bracesInfoGlobal:
         if str(brace[1].value) == str(instructionNumber):
             return brace[0]
-    error(1052, [ID])
+    error(27, [ID])
 
 def setObrsVars(bracesInfo):
     for braces in bracesInfo:
@@ -149,7 +150,7 @@ def getVar(varName):
     value, exists = hasVar(varName)
     if exists:
         return value
-    error(101, varName)
+    error(28, [varName])
 
 
 def hasVar(varName):
@@ -186,9 +187,9 @@ def isNbFunction(functionName):
                 return True
             return False
         except Exception as e:
-            error(1001, [functionName, "language"])
+            error(20, [functionName])
     else:
-        error(72, functionName)
+        error(26, functionName)
 
 
 def addPyFuncs(libName):
@@ -203,7 +204,7 @@ def addPyFuncs(libName):
 def addNbFunctions(functions):
     for func in functions:
         if len(func) < 2:
-            error(10031)
+            error(29, [func])
         flt[func[0].value] = {"language":"nobash", "line":func[1]}
         if len(func) > 2:
             flt[func[0].value]["arguments"] = [ parameter.value for parameter in func[2:]]

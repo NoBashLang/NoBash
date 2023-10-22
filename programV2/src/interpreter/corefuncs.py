@@ -19,15 +19,15 @@ def __exit__(*exitCode):
 
 def __setVariable__(*varsAndValues):
     if len(varsAndValues) <= 1:
-        error(249, [varsAndValues, RIP[-1]])
+        error(1, [])
     varNames, varValue = varsAndValues[:-1], varsAndValues[-1]
     if len(varNames) == 1:
         setVar(varNames[0].value, varValue)
         return
     elif varValue.type != "list":
-        error(345, [len(varNames), 1, RIP[-1]])
+        error(2, [len(varNames)])
     elif len(varValue.value) != len(varNames):
-        error(345, [len(varNames), len(varValue.value), RIP[-1]])
+        error(3, [len(varValue.value), len(varNames)])
     for i, value in enumerate(varValue.value):
         setVar(varNames[i].value, value)
 
@@ -44,18 +44,18 @@ def __funcReturn__(*values):
         try: 
             setVar("ret"+str(RIP[-2]), values[0], scope=funcNameRIP[-2])
         except Exception as e:
-            error(1041, RIP[-1])
+            error(4, [])
     elif len(values) >= 2:
         try: 
             setVar("ret"+str(RIP[-2]), Token(values, "list"), scope=funcNameRIP[-2])
         except Exception as e:
-            error(1041, RIP[-1])
+            error(4, [])
     RIP.pop()
     RIP[-1] = RIP[-1]+1
     if len(funcNameRIP) > 1:
         funcNameRIP.pop()
     else:
-        error(10051)
+        error(4)
 
 
 def __isEqual__(x, y):
@@ -66,7 +66,7 @@ def __doWhile__(condition, endInstruction):
     try: 
         endInstruction = int(endInstruction)
     except:
-        error(1045, [endInstruction])
+        error(5, [endInstruction])
     braceID = getBraceIdFromEndInstruction(endInstruction)
     if condition.type == "bool":
         if condition.value == "true":
@@ -80,7 +80,7 @@ def __jumpBackWhile__(startInstruction):
     try: 
         startInstruction = int(startInstruction)
     except:
-        error(1045, [startInstruction])
+        error(6, [startInstruction])
     braceID = getBraceIdFromStartInstruction(startInstruction)
     if getVar(f"$whileResult{str(braceID)}"):
         RIP[-1] = startInstruction
@@ -111,7 +111,7 @@ def __checkIf__(condition, endInstruction):
     try: 
         endInstruction = int(endInstruction)
     except:
-        error(1045, [endInstruction])
+        error(5, [endInstruction])
     braceID = getBraceIdFromEndInstruction(endInstruction)
     setVar(f"$ifResult{str(braceID)}", Token("true"))
     if condition.type == "bool":
@@ -133,7 +133,7 @@ def __checkIfElse__(condition, endInstruction):
     try: 
         endInstruction = int(endInstruction)
     except:
-        error(1045, [endInstruction])
+        error(5, [endInstruction])
     braceID = getBraceIdFromEndInstruction(endInstruction)
     ranBefore = getIfChainRan(braceID)
     if condition.type == "bool" and not ranBefore:
@@ -148,7 +148,7 @@ def __doElse__(endInstruction):
     try: 
         endInstruction = int(endInstruction)
     except:
-        error(1045, [endInstruction])
+        error(5, [endInstruction])
     braceID = getBraceIdFromEndInstruction(endInstruction)
     ranBefore = getIfChainRan(braceID)
     if not ranBefore:
@@ -165,7 +165,7 @@ def __lesser__(x, y):
     elif x.type == y.type == "string":
         return Token(str(len(x.value) < len(y.value)).lower(), "bool")
     else:
-        error(530, [x.type, y.type])
+        error(7, [x.type, y.type])
 
 
 def __greater__(x, y):
@@ -175,7 +175,7 @@ def __greater__(x, y):
     elif x.type == y.type == "string":
         return Token(str(len(x.value) > len(y.value)).lower(), "bool")
     else:
-        error(530, [x.type, y.type])
+        error(7, [x.type, y.type])
 
 def __lesserOrEqual__(x, y):
     nums = ["int", "float"]
@@ -184,7 +184,7 @@ def __lesserOrEqual__(x, y):
     elif x.type == y.type == "string":
         return Token(str(len(x.value) <= len(y.value)).lower(), "bool")
     else:
-        error(530, [x.type, y.type])
+        error(7, [x.type, y.type])
 
 
 def __greaterOrEqual__(x, y):
@@ -194,7 +194,7 @@ def __greaterOrEqual__(x, y):
     elif x.type == y.type == "string":
         return Token(str(len(x.value) >= len(y.value)).lower(), "bool")
     else:
-        error(530, [x.type, y.type])
+        error(7, [x.type, y.type])
 
 
 def __doFor__(var, dataStruct, endInstruction):
@@ -208,7 +208,7 @@ def __doFor__(var, dataStruct, endInstruction):
     try: 
         endInstruction = int(endInstruction)
     except:
-        error(1045, [endInstruction])
+        error(5, [endInstruction])
     braceID = getBraceIdFromEndInstruction(endInstruction)
     doneRunning, ranBefore = hasVar(f"$forDone{str(braceID)}")
     if not ranBefore or doneRunning:
@@ -222,7 +222,7 @@ def __doFor__(var, dataStruct, endInstruction):
 
 def ___dict__(*items): # Extra _ is needed because of shadowing
     if any([item for item in items if item.type != "zip"]):
-        error(439, [item])
+        error(8, [str(item)])
     dictionary = {item.value[0]: item.value[1] for item in items}
     return Token(dictionary, "dict")
 
@@ -236,7 +236,7 @@ def __jumpBackFor__(startInstruction):
     try: 
         startInstruction = int(startInstruction)
     except:
-        error(1045, [startInstruction])
+        error(6, [startInstruction])
     braceID = getBraceIdFromStartInstruction(startInstruction)
     if not getVar(f"$forDone{str(braceID)}"):
         RIP[-1] = startInstruction
@@ -261,7 +261,7 @@ def __import__(file): # This only works for python
         importPyLib(file.value, "~/.nobash/pylibraries/")
         addPyFuncs(file.value)
         return
-    error(435, [file, RIP[-1]])
+    error(9, [str(file)])
 
 
 def __bothAnd__(boolOne, boolTwo):
@@ -269,18 +269,18 @@ def __bothAnd__(boolOne, boolTwo):
         result = bool(boolOne) and bool(boolTwo)
         return Token("true" if result else "false", "bool")
     else:
-        error(453, [boolOne.type, boolTwo.type])
+        error(7, [boolOne.type, boolTwo.type])
 
 def __bothOr__(boolOne, boolTwo):
     if isinstance(boolOne, Token) and boolOne.type == "bool" and isinstance(boolTwo, Token) and boolTwo.type == "bool":
         result = bool(boolOne) or bool(boolTwo)
         return Token("true" if result else "false", "bool")
     else:
-        error(454, [boolOne.type, boolTwo.type])
+        error(7, [boolOne.type, boolTwo.type])
 
 def __makeNot__(boolValue):
     if isinstance(boolValue, Token) and boolValue.type == "bool":
         result = not boolValue
         return Token("true" if result else "false", "bool")
     else:
-        error(453, boolValue.type)
+        error(7, boolValue.type)

@@ -37,7 +37,7 @@ class Token():
                 self.type = "int"
                 return
             elif value.count(".") > 1:
-                errors.error(34, [value])
+                errors.error(21, [value])
             self.value = float(self.value)
             return
         elif value.startswith('"') and value.endswith('"'):
@@ -56,8 +56,7 @@ class Token():
             if _type:
                 self.type = _type
                 return
-        print("Cant detect token:", self.value)
-        errors.error(33)
+        errors.error(22, [value])
 
 
     def __str__(self):

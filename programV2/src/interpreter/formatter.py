@@ -74,9 +74,9 @@ def verifyInstructionNumbers(instructions) -> bool:
         try:
             intIndx = int(instruction[0].value)
         except Exception:
-            error(62, instruction[0].value)
+            error(10, [instruction[0].value])
         if intIndx != indx:
-            error(61, [instruction[0].value, indx])
+            error(10, [instruction[0].value])
 
 
 def removeMetadata(sections):

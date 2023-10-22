@@ -14,4 +14,4 @@ def importPyLib(libName, location):
         lib = importlib.import_module(libName)
         pyLibs[libName] = lib
     except Exception as e:
-        error(74, [libName, e])
+        error(11, [libName, e])

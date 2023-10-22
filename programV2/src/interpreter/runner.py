@@ -19,7 +19,7 @@ import pathlib
 def lastRIP() -> int:
     if len(RIP) >= 1:
         return RIP[-1]
-    error(51)
+    error(13, [])
 
 
 def getInstruction(instructions) -> list:
@@ -27,8 +27,8 @@ def getInstruction(instructions) -> list:
         lastRip = lastRIP()
         if lastRip < len(instructions):
             return instructions[lastRip]
-        error(1021, [len(instructions), lastRIP])
-    error(52)
+        error(15, [len(instructions), lastRIP])
+    error(14)
 
 
 def replaceBuiltins(funcName):
@@ -44,7 +44,7 @@ def replaceBuiltins(funcName):
 
 def getDetails(instruction: list) -> (int, int, str, list):
     if len(instruction) < 3:
-        error(63, [instruction[0], len(instruction)])
+        error(16, [instruction[0], len(instruction)])
     details = [instruction[0], instruction[1], instruction[2]]
     details[2] = replaceBuiltins(details[2])
     if len(instruction) == 3:
@@ -66,7 +66,7 @@ def callNbFunction(functionName: str, parameters: list):
         if "arguments" in flt[functionName].keys():
             reqArgs = flt[functionName]["arguments"]
             if len(reqArgs) != 0:
-                error(142, [functionName, len(parameters), len(reqArgs)])
+                error(17, [functionName, len(parameters), len(reqArgs)])
 
 
 def callPyFunction(functionName: str, parameters: list):
@@ -74,7 +74,7 @@ def callPyFunction(functionName: str, parameters: list):
     try:
         func = getattr(lib, functionName.value)
     except Exception as e:
-        error(73, [functionName.value, getFuncLibraryName(functionName)])
+        error(18, [functionName.value, getFuncLibraryName(functionName)])
     retVals = None
     try:
         if not parameters:
@@ -84,14 +84,14 @@ def callPyFunction(functionName: str, parameters: list):
         return retVals
     except Exception as e:
         if len(parameters) != len(signature(func).parameters):
-            error(81, [func.__name__, len(parameters), len(signature(func).parameters)])
-        error(8000, e)
+            error(17, [func.__name__, len(parameters), len(signature(func).parameters)])
+        error(19, [str(e)])
 
 def advanceRIP(prevRIP, instructionsLen, RIP):
     if prevRIP == RIP:
             RIP[-1] += 1
     if RIP[-1] >= instructionsLen:
-        error(1010, RIP[-1])
+        error(15, [RIP[-1], instructionsLen])
 
 
 def extractSections(sections):
@@ -138,6 +138,7 @@ def runInstructions(sections: dict):
         prevRIP = RIP.copy()
         instruction = getInstruction(instructions)
         instNbr, lineNbr, funcName, parameters = getDetails(instruction)
+        globalSGT.currentLine = lineNbr
         parameters = replaceVars(parameters, funcName)
         if isPyFunction(funcName):
             retVals = callPyFunction(funcName, parameters)
@@ -145,7 +146,7 @@ def runInstructions(sections: dict):
         elif isNbFunction:
             callNbFunction(funcName, parameters)
         else:
-            error(1031, [funcName, "language"])
+            error(20, [funcName])
         advanceRIP(prevRIP, len(instructions), RIP)
         
         
