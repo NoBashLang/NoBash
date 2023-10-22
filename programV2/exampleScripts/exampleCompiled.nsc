@@ -1,0 +1,21 @@
+# Instructions
+0, 1, put, "hello"
+1, 2, add, 1, 3
+2, 2, put, "1+3 is:", ret1
+3, 2, testFunc
+4, 4, put, ret3
+5, 5, put, "Got here :)"
+6, 5, specialputer, "Hello"
+7, 3, __exit__
+8, 4, put, "This function was called!!"
+9, 5, __setVariable__, testVar, "This is my test variable!!!!"
+10, 5, put, "Running testfunc"
+11, 5, put, testVar
+12, 4, __return__, "returned value :)"
+13, 1, put, "Line 14 ran.."
+14, 1, add, message, " world!!!"
+15, 1, put, ret14
+16, 1, __return__
+# Functions
+testFunc, 8
+specialputer, 13, message

@@ -1,0 +1,19 @@
+# Metadata
+filehash, 3b9ca903c0cf05216e93bfd40e21a3a037600f8800b2c6e2b14a0a3e45b634ac
+compileunixtime, 1697985798.7168896
+compiledsystemos, Linux-6.5.7-arch1-1-x86_64-with-glibc2.38
+compiledsystemmac, d8:5e:d3:e1:e4:a2
+compilerversion, 0.1.0-alpha
+# Instructions
+0, 0, __isEqual__, 1, 1
+1, 0, __checkIf__,  ret0, obrs0
+2, 2, __cbrfIf__, cbrs0
+3, 2, __doElse__, obrs1
+4, 4, __cbrfElse__, cbrs1
+5, 5, __exit__
+# Functions
+# IfChains
+0, 1
+# BracesInfo
+0, 0, if, 2
+1, 2, else, 4

@@ -1,0 +1,20 @@
+{
+    "1": "Could not read file '{}', make sure it exists and is readable.",
+    "2": "Could not read the 'version.json' file. Make sure it exists is readable.",
+    "3": "No version info on the compiler stored in 'version.json'. Please supply the version numbers for all programs.",
+    "4": "Uneven amount of strings in line {}. Make sure you terminate all strings.",
+    "5": "Line {} contains too many '{{'. Please make sure each line only has one '{{'.",
+    "6": "Line {} has a '{{', but it is not at the end of the line. Expected '{{' at the end of the line",
+    "7": "Line {} contains too many '}}'. Please make sure each line only has one '}}'.",
+    "8": "Line {} has a '}}', but it is not at the start of the line. Expected '}}' at the start of the line",
+    "9": "Unmatched '}}' on line {}. Please make sure that every '}}' has a preceeding '{'.",
+    "10": "Unclosed '{{' on line {}. Please make sure that every '{{' has a proceeding '}}'.",
+    "11": "Line {} does not start with proper control flow statment, but instead starts with {}.",
+    "12": "Unmatched ')' on line {}. Please make sure that every ')' has a preceeding '('.",
+    "13": "Unclosed '(' on line {}. Please make sure that every '(' has a proceeding ')'.",
+    "14": "Line {} defines a function with an invalid name. Functions may only have letters in their name.",
+    "15": "Line {} does not have the right amount of opening or closing brackets. Each line must have one of each.",
+    "16": "Could not write instructions to file '{}'",
+    "17": "Internal error, not enough data on curly bracket to write",
+    "18": "No file location provided"
+}
